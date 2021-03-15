@@ -1,1 +1,1 @@
-# fruitwars
+# Project Repo for Fruit Wars
