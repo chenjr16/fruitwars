@@ -1,0 +1,19 @@
+{
+  "name": "fruitwars",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chenjr16/fruitwars.git"
+  },
+  "author": "Chris, Danny, Junru",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chenjr16/fruitwars/issues"
+  },
+  "homepage": "https://github.com/chenjr16/fruitwars#readme"
+}
