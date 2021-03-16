@@ -11,16 +11,23 @@
       integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
       crossorigin="anonymous"
     />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300&display=swap"
+      rel="stylesheet"
+    />
     <title>Game</title>
   </head>
-  <body>
+  <body class="main">
     <h1>Fruit Wars</h1>
     <div class="wrapper">
-      <section><h3>You have $3000 dollars</h3></section>
-      <section><h3>Location</h3></section>
+      <section></section>
+      <section class="center"><h3>Current Balance: $???</h3></section>
+      <section class="center"><h3>Location</h3></section>
     </div>
     <div class="wrapper">
-      <section>
+      <section></section>
+      <section class="center">
         <h3>Inventory</h3>
         <div id="inventory">
           <table>
@@ -55,7 +62,7 @@
           </table>
         </div>
       </section>
-      <section>
+      <section class="center">
         <div id="price">
           <h3>Price</h3>
           <table>
@@ -91,19 +98,41 @@
         </div>
       </section>
     </div>
-    <div>
-      <h3>Event Display</h3>
-      <p>
-        Trade war happend, over supply of all farm produce, all fruit price
-        dropped dramatically
-      </p>
+    <div class="wrapperControl">
+      <section></section>
+      <section class="center">
+        <h3>Event Display</h3>
+        <p>
+          Trade war happend, over supply of all farm produce, all fruit price
+          dropped dramatically
+        </p>
+      </section>
     </div>
-    <div>
-      <h3>User Control Interface</h3>
-      <button>Option 1</button>
-      <button>Option 2</button>
-      <button>Option 3</button>
+    <div class="wrapperControl">
+      <section></section>
+      <section class="center">
+        <h3>User Control Interface</h3>
+        <div id="defaultControl">
+          <button type="button" class="btn btn-primary" id="buy">Buy</button>
+          <div class="divider"></div>
+          <button type="button" class="btn btn-warning" id="sell">Sell</button>
+          <div class="divider"></div>
+          <button type="button" class="btn btn-success" id="travel">
+            Travel
+          </button>
+        </div>
+        <div style="display: none" id="buyControl">
+          <div id="buyForm">Buy Control Panel</div>
+        </div>
+        <div style="display: none" id="sellControl">
+          <div id="sellForm">Sell Control Panel</div>
+        </div>
+        <div style="display: none" id="travelControl">
+          <div id="travelSelection">Travel Selection</div>
+        </div>
+      </section>
     </div>
+
     <script src="gameScript.js"></script>
   </body>
 </html>
