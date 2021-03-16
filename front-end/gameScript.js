@@ -4,6 +4,10 @@ document.getElementById("sell").addEventListener("click", switchToSellControl);
 document
   .getElementById("travel")
   .addEventListener("click", switchToTravelControl);
+
+//use cookies to get player name
+let cookieArray = document.cookie.split("=");
+document.getElementById("player").innerHTML = `Player: ${cookieArray[1]}`;
 //show buy control panel
 function switchToBuyControl() {
   document.getElementById("defaultControl").style.display = "none";

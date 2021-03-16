@@ -11,10 +11,12 @@ function handlePlayGameBtnClick() {
   if (playName) {
     setCookie("playerName", playName, 2);
   }
+  location.href = "game.html";
 }
 
 function handleLeaderBoardBtnClick() {
   console.log("leaderBoardBtn was clicked...");
+  location.href = "leaderboard.html";
 }
 
 function setCookie(cName, cValue, exHours) {
