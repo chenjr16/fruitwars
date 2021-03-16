@@ -8,6 +8,16 @@ document
 //use cookies to get player name
 let cookieArray = document.cookie.split("=");
 document.getElementById("player").innerHTML = `Player: ${cookieArray[1]}`;
+
+//restart game
+document.getElementById("restart").addEventListener("click", restartGame);
+
+//restart function
+function restartGame() {
+  if (confirm("Are you sure you want to restart a new game?")) {
+    location.href = "index.html";
+  }
+}
 //show buy control panel
 function switchToBuyControl() {
   document.getElementById("defaultControl").style.display = "none";
