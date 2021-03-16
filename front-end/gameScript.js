@@ -1,3 +1,5 @@
+const backend = "http://localhost:8080/";
+
 //Default control panel
 document.getElementById("buy").addEventListener("click", switchToBuyControl);
 document.getElementById("sell").addEventListener("click", switchToSellControl);
@@ -11,6 +13,26 @@ document.getElementById("player").innerHTML = `Player: ${cookieArray[1]}`;
 
 //restart game
 document.getElementById("restart").addEventListener("click", restartGame);
+
+//show prices
+const URL = backend + "prices";
+let cityName = document.getElementById("cityName").innerHTML;
+fetch(URL)
+  .then((res) => res.json())
+  .then((data) => {
+    data.forEach((user) => {
+      const { city, prices } = user;
+      let priceDisplay = "";
+      if (city === cityName) {
+        for (const [key, value] of Object.entries(prices)) {
+          priceDisplay += `<div>
+          ${key}: ${value}
+          </div>`;
+        }
+        document.getElementById("prices").innerHTML = priceDisplay;
+      }
+    });
+  });
 
 //restart function
 function restartGame() {

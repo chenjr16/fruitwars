@@ -3,6 +3,7 @@ const app = express();
 
 const cors = require("cors");
 const players = require("./leaderboard_db");
+const prices = require("./priceDB");
 
 app.use(cors());
 app.use(express.json());
@@ -72,6 +73,11 @@ app.get("/", (req, res) => {
 app.get("/leaderboard", (req, res) => {
   console.log("Get at /leaderboard directory");
   res.send(leaderboard);
+});
+
+app.get("/prices", (req, res) => {
+  console.log("sending prices");
+  res.send(prices);
 });
 
 // Post
