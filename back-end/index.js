@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 
 const cors = require("cors");
+const players = require("./leaderboard_db");
 
 app.use(cors());
 app.use(express.json());
@@ -18,12 +19,12 @@ app.listen(PORT, () => {
 });
 
 /*
-/  Routes
+/  Routes--
 */
 
 // Get
 app.get("/", (req, res) => {
-  console.log("Get at root directory");
+  res.send(players);
 });
 
 // Post
