@@ -38,7 +38,7 @@ const PORT = process.env.PORT || 8080;
   }
 }
 */
-const players = [];
+const users = [];
 
 /*  leaderboard data structue
 {
@@ -81,14 +81,14 @@ app.post("/", (req, res) => {
 
 app.post("/addPlayer", (req, res) => {
   console.log("Post at addPlayer directory");
-  console.log(req.body);
+  //.log(req.body);
   const newUser = req.body.playerData.userName;
-  console.log("New user name is: " + newUser);
+  //console.log("New user name is: " + newUser);
   let found = false;
-  console.log("Loop of array");
-  for (let i = 0; i < players.length; i++) {
-    console.log(players[i]);
-    if (newUser === players[i].userName) {
+  //console.log("Loop of array");
+  for (let i = 0; i < users.length; i++) {
+    //console.log(users[i]);
+    if (newUser === users[i].userName) {
       found = true;
       break;
     }
@@ -96,7 +96,7 @@ app.post("/addPlayer", (req, res) => {
   if (found) {
     res.sendStatus(500);
   } else {
-    players.push(req.body.playerData);
+    users.push(req.body.playerData);
     res.sendStatus(200);
   }
 });
