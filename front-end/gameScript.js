@@ -77,3 +77,9 @@ function handleBackBtnClick() {
   document.getElementById("sellControl").style.display = "none";
   document.getElementById("travelControl").style.display = "none";
 }
+
+function handleCityClick(evt) {
+  //console.log(evt);
+  //console.log(evt.value);
+  // To-Do: handle changing city
+}
