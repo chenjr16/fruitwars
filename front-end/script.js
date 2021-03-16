@@ -28,12 +28,12 @@ function handlePlayGameBtnClick() {
       console.log(res);
       if (res.status === 200) {
         startGame(playerName);
+        location.href = "game.html";
       } else {
         handleDuplicateUser(playerName);
       }
     });
   }
-  location.href = "game.html";
 }
 
 function handleLeaderBoardBtnClick() {
@@ -78,7 +78,6 @@ function generateNewPlayer(playerName) {
 function startGame(user) {
   console.log("In startGame()...");
   setCookie("userName", user, 2);
-  // code to load new page
 }
 
 function handleDuplicateUser(user) {
