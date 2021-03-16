@@ -1,0 +1,25 @@
+@import url("https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Kaushan+Script&family=Ranchers&family=Ravi+Prakash&family=Sacramento&family=Shadows+Into+Light&display=swap");
+
+body {
+  background-image: url("https://d27nqrvkk22y65.cloudfront.net/cover/image/41757/big_17d0fc3fd0.jpg");
+  background-repeat: no-repeat;
+  /* background-attachment: fixed; */
+  background-size: cover;
+}
+
+p {
+  font-family: "Gloria Hallelujah", cursive;
+  font-size: 30px;
+  color: black;
+}
+#info {
+  position: absolute;
+  left: 370px;
+  top: 750px;
+}
+
+#buttons {
+  position: absolute;
+  left: 700px;
+  top: 880px;
+}
