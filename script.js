@@ -52,6 +52,7 @@ function generateNewPlayer(playerName) {
   const player = {
     userName: playerName,
     money: 2000,
+    day: 0,
     inventory: {
       pineapple: 0,
       apples: 0,
