@@ -84,7 +84,6 @@ function handleCityClick(evt) {
   // To-Do: handle changing city
 }
 
-<<<<<<< HEAD
 function handleSellSelector(evt) {
   console.log(evt);
   console.log(evt.value);
@@ -121,7 +120,6 @@ function handleBuyAmountDrag(evt) {
   document.getElementById("buyLabel").innerHTML = `${amount}(+$${
     amount * cost
   })`;
-=======
 // creating random Event Display
 const autoTimed = setInterval(randomLine, 10000);
 let events = [
@@ -134,5 +132,4 @@ let events = [
 function randomLine() {
   let randomLines = Math.floor(Math.random() * events.length);
   document.getElementById("eventLines").innerHTML = events[randomLines];
->>>>>>> FE_update1
 }
