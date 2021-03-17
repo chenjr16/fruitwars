@@ -62,6 +62,10 @@ function restartGame() {
 function switchToBuyControl() {
   document.getElementById("defaultControl").style.display = "none";
   document.getElementById("buyControl").style.display = "block";
+  document.getElementById("buyFruitSelector").value = "none";
+  document.getElementById("buyAmount").value = 0;
+  document.getElementById("buyLabel").innerHTML = "0($0)";
+  document.getElementById("buyAmount").setAttribute("max", "0");
 }
 
 //show sell control panel
@@ -121,11 +125,38 @@ function handleSellAmountDrag(evt) {
   })`;
 }
 
-function handleBuySelector(evt) {
+async function handleBuySelector(evt) {
   //console.log(evt);
-  //console.log(evt.value);
+  const fruit = evt.value;
   // To-do: just setting a value for testing. This should be read from the server.
-  document.getElementById("buyAmount").setAttribute("cost", "3");
+  let cookieArray = document.cookie.split("=");
+  const user = cookieArray[1];
+  const payload = { userName: user };
+  const playerData = await fetch(backend + "getPlayer", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  })
+    .then((res) => {
+      return res.json();
+    })
+    .then((data) => {
+      return data;
+    });
+  const playerMoney = playerData.money;
+  const fruitCost = playerData.location.prices[fruit];
+  console.log("playerMoney: " + playerMoney);
+  console.log("fruitCost: " + fruitCost);
+  document.getElementById("buyAmount").value = 0;
+  document.getElementById("buyLabel").innerHTML = "0($0)";
+  if (fruit === "none") {
+    document.getElementById("buyAmount").setAttribute("cost", "0");
+    document.getElementById("buyAmount").setAttribute("max", "0");
+  } else {
+    const maxPurchase = playerMoney / fruitCost;
+    document.getElementById("buyAmount").setAttribute("cost", fruitCost);
+    document.getElementById("buyAmount").setAttribute("max", maxPurchase);
+  }
 }
 
 function handleBuyAmountDrag(evt) {
@@ -135,9 +166,12 @@ function handleBuyAmountDrag(evt) {
   const cost = evt.getAttribute("cost");
   //console.log(amount);
   //console.log(cost);
-  document.getElementById("buyLabel").innerHTML = `${amount}(+$${
+  document.getElementById("buyLabel").innerHTML = `${amount}(-$${
     amount * cost
   })`;
+
+  // Not sure why this was added into the buyAmount slider event handler;
+  /*
   // creating random Event Display
   const autoTimed = setInterval(randomLine, 10000);
   let events = [
@@ -151,4 +185,5 @@ function handleBuyAmountDrag(evt) {
     let randomLines = Math.floor(Math.random() * events.length);
     document.getElementById("eventLines").innerHTML = events[randomLines];
   }
+  */
 }
