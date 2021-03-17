@@ -1,8 +1,7 @@
-// local
-//const backend = "http://localhost:8080/";
-
-// remote
+//remote
 const backend = "https://fruitwars.herokuapp.com/";
+//local
+//const backend = "http://localHost:8080/";
 
 document
   .getElementById("playGameBtn")

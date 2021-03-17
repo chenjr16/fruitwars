@@ -1,5 +1,7 @@
+//remote
 const backend = "https://fruitwars.herokuapp.com/";
-//const backend = "http://localhost:8080/";
+//local
+//const backend = "http://localHost:8080/";
 
 //Default control panel
 document.getElementById("buy").addEventListener("click", switchToBuyControl);
