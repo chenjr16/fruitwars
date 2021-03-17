@@ -51,6 +51,7 @@ function displayInventory() {
           </div>`;
       }
       document.getElementById("inventory").innerHTML = inventoryDisplay;
+      document.getElementById("balance").innerHTML = money;
     });
 }
 
