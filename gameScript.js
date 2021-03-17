@@ -72,6 +72,10 @@ function switchToBuyControl() {
 function switchToSellControl() {
   document.getElementById("defaultControl").style.display = "none";
   document.getElementById("sellControl").style.display = "block";
+  document.getElementById("fruitSelector").value = "none";
+  document.getElementById("sellAmount").value = 0;
+  document.getElementById("sellLabel").innerHTML = "0($0)";
+  document.getElementById("sellAmount").setAttribute("max", "0");
 }
 
 //show travel panel
@@ -106,11 +110,37 @@ function handleCityClick(evt) {
   // To-Do: handle changing city
 }
 
-function handleSellSelector(evt) {
-  console.log(evt);
-  console.log(evt.value);
+async function handleSellSelector(evt) {
+  //console.log(evt);
+  //console.log(evt.value);
   // To-do: just setting a value for testing. This should be read from the server.
-  document.getElementById("sellAmount").setAttribute("cost", "3");
+  const fruit = evt.value;
+  let cookieArray = document.cookie.split("=");
+  const user = cookieArray[1];
+  const payload = { userName: user };
+  const playerData = await fetch(backend + "getPlayer", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  })
+    .then((res) => {
+      return res.json();
+    })
+    .then((data) => {
+      return data;
+    });
+  const fruitInventory = playerData.inventory[fruit];
+  const fruitCost = playerData.location.prices[fruit];
+  console.log("fruitInventory: " + fruitInventory);
+  console.log("fruitCost: " + fruitCost);
+  document.getElementById("sellLabel").innerHTML = "0($0)";
+  if (fruit === "none") {
+    document.getElementById("sellAmount").setAttribute("cost", "0");
+    document.getElementById("sellAmount").setAttribute("max", "0");
+  } else {
+    document.getElementById("sellAmount").setAttribute("cost", fruitCost);
+    document.getElementById("sellAmount").setAttribute("max", fruitInventory);
+  }
 }
 
 function handleSellAmountDrag(evt) {
@@ -128,7 +158,6 @@ function handleSellAmountDrag(evt) {
 async function handleBuySelector(evt) {
   //console.log(evt);
   const fruit = evt.value;
-  // To-do: just setting a value for testing. This should be read from the server.
   let cookieArray = document.cookie.split("=");
   const user = cookieArray[1];
   const payload = { userName: user };
