@@ -83,3 +83,22 @@ function handleCityClick(evt) {
   //console.log(evt.value);
   // To-Do: handle changing city
 }
+
+function handleSellSelector(evt) {
+  console.log(evt);
+  console.log(evt.value);
+  // To-do: just setting a value for testing. This should be read from the server.
+  document.getElementById("sellAmount").setAttribute("cost", "3");
+}
+
+function handleSellAmountDrag(evt) {
+  console.log(evt);
+  console.log(evt.value);
+  const amount = evt.value;
+  const cost = evt.getAttribute("cost");
+  console.log(amount);
+  console.log(cost);
+  document.getElementById("sellLabel").innerHTML = `${amount}(+$${
+    amount * cost
+  })`;
+}

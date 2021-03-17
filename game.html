@@ -101,6 +101,36 @@
         </div>
         <div style="display: none" id="sellControl">
           <div id="sellForm">Sell Control Panel</div>
+          <div>
+            <select
+              name="fruits"
+              id="fruitSelector"
+              onchange="handleSellSelector(this)"
+            >
+              <option value="none">Make Selection</option>
+              <option value="pineapple">Pineapples</option>
+              <option value="apple">Apples</option>
+              <option value="cherry">Cherries</option>
+              <option value="strawberry">Strawberries</option>
+              <option value="key lime">Key Limes</option>
+              <option value="avacado">Avacado</option>
+            </select>
+            <input
+              type="range"
+              name="sellAmount"
+              id="sellAmount"
+              min="0"
+              max="50"
+              cost="0"
+              oninput="handleSellAmountDrag(this)"
+            />
+            <p id="sellLabel"></p>
+            <p></p>
+            <button type="button" class="btn btn-primary" id="sellConfirmBtn">
+              Confirm
+            </button>
+          </div>
+
           <button type="button" class="btn btn-warning" id="sellBackBtn">
             Back
           </button>
