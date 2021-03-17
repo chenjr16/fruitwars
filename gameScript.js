@@ -120,16 +120,17 @@ function handleBuyAmountDrag(evt) {
   document.getElementById("buyLabel").innerHTML = `${amount}(+$${
     amount * cost
   })`;
-// creating random Event Display
-const autoTimed = setInterval(randomLine, 10000);
-let events = [
-  "Trade war is here... over supply of all farm produce, all fruits price dropped dramatically. Trade wisely.",
-  "Due to inclement weather shipment has been delayed. Shortage of fruits in the market. Trade wisely. ",
-  "Summer is here and the demand for fruits has gone up... Time to make $",
-  "More than 50% of the fruits nationwide were damaged due to pests. Demand for fruits has gone up. Trade wisely.",
-  "You might be able to find better rates in other cities...",
-];
-function randomLine() {
-  let randomLines = Math.floor(Math.random() * events.length);
-  document.getElementById("eventLines").innerHTML = events[randomLines];
+  // creating random Event Display
+  const autoTimed = setInterval(randomLine, 10000);
+  let events = [
+    "Trade war is here... over supply of all farm produce, all fruits price dropped dramatically. Trade wisely.",
+    "Due to inclement weather shipment has been delayed. Shortage of fruits in the market. Trade wisely. ",
+    "Summer is here and the demand for fruits has gone up... Time to make $",
+    "More than 50% of the fruits nationwide were damaged due to pests. Demand for fruits has gone up. Trade wisely.",
+    "You might be able to find better rates in other cities...",
+  ];
+  function randomLine() {
+    let randomLines = Math.floor(Math.random() * events.length);
+    document.getElementById("eventLines").innerHTML = events[randomLines];
+  }
 }
