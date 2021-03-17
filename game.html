@@ -43,10 +43,7 @@
       <section></section>
       <section class="center">
         <h3>Event Display</h3>
-        <p>
-          Trade war happend, over supply of all farm produce, all fruit price
-          dropped dramatically
-        </p>
+        <p id="eventLines">It's time to get rich... Good Luck!</p>
       </section>
     </div>
     <div class="wrapperControl">
@@ -64,12 +61,72 @@
         </div>
         <div style="display: none" id="buyControl">
           <div id="buyForm">Buy Control Panel</div>
+          <div>
+            <select
+              name="buyFruits"
+              id="buyFruitSelector"
+              onchange="handleBuySelector(this)"
+            >
+              <option value="none">Make Selection</option>
+              <option value="pineapple">Pineapples</option>
+              <option value="apple">Apples</option>
+              <option value="cherry">Cherries</option>
+              <option value="strawberry">Strawberries</option>
+              <option value="key lime">Key Limes</option>
+              <option value="avacado">Avacado</option>
+            </select>
+            <input
+              type="range"
+              name="buyAmount"
+              id="buyAmount"
+              min="0"
+              max="50"
+              cost="0"
+              oninput="handleBuyAmountDrag(this)"
+            />
+            <p id="buyLabel"></p>
+            <button
+              type="button"
+              class="btn btn-primary"
+              id="buyConfirmBtn"
+            ></button>
+          </div>
           <button type="button" class="btn btn-warning" id="buyBackBtn">
             Back
           </button>
         </div>
         <div style="display: none" id="sellControl">
           <div id="sellForm">Sell Control Panel</div>
+          <div>
+            <select
+              name="fruits"
+              id="fruitSelector"
+              onchange="handleSellSelector(this)"
+            >
+              <option value="none">Make Selection</option>
+              <option value="pineapple">Pineapples</option>
+              <option value="apple">Apples</option>
+              <option value="cherry">Cherries</option>
+              <option value="strawberry">Strawberries</option>
+              <option value="key lime">Key Limes</option>
+              <option value="avacado">Avacado</option>
+            </select>
+            <input
+              type="range"
+              name="sellAmount"
+              id="sellAmount"
+              min="0"
+              max="50"
+              cost="0"
+              oninput="handleSellAmountDrag(this)"
+            />
+            <p id="sellLabel"></p>
+            <p></p>
+            <button type="button" class="btn btn-primary" id="sellConfirmBtn">
+              Confirm
+            </button>
+          </div>
+
           <button type="button" class="btn btn-warning" id="sellBackBtn">
             Back
           </button>
