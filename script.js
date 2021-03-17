@@ -1,7 +1,7 @@
 //remote
 const backend = "https://fruitwars.herokuapp.com/";
 //local
-//const backend = "http://localHost:8080/";
+//onst backend = "http://localHost:8080/";
 
 document
   .getElementById("playGameBtn")
@@ -10,17 +10,28 @@ document
   .getElementById("leaderBoardBtn")
   .addEventListener("click", handleLeaderBoardBtnClick);
 
-function handlePlayGameBtnClick() {
+async function handlePlayGameBtnClick() {
   const playerName = document.getElementById("playerName").value;
-  console.log(`playGameBtn was clicked...\nplayer name is ${playerName}.`);
+  //console.log(`playGameBtn was clicked...\nplayer name is ${playerName}.`);
   const URL = backend + "addPlayer";
-  console.log(URL);
+  //console.log(URL);
   if (playerName) {
-    const player = generateNewPlayer(playerName);
+    const urlPrice = backend + "prices";
+    let locPrices = {};
+    await fetch(urlPrice)
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        console.log("In Fetch....");
+        console.log(data);
+        locPrices = data[Math.floor(Math.random() * 100) % 6];
+      });
+    const player = generateNewPlayer(playerName, locPrices);
     console.log(player);
     const payload = { playerData: player };
     // check if playerName is free...
-    fetch(URL, {
+    await fetch(URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
@@ -48,7 +59,7 @@ function setCookie(cName, cValue, exHours) {
   document.cookie = cName + "=" + cValue + ";" + expires + ";path=/";
 }
 
-function generateNewPlayer(playerName) {
+function generateNewPlayer(playerName, startingLocation) {
   const player = {
     userName: playerName,
     money: 2000,
@@ -61,17 +72,7 @@ function generateNewPlayer(playerName) {
       keyLimes: 0,
       avacadoes: 0,
     },
-    location: {
-      city: "New York",
-      prices: {
-        pineapple: 3,
-        apples: 5,
-        cherries: 6,
-        strawberries: 4,
-        keyLimes: 4,
-        avacadoes: 8,
-      },
-    },
+    location: startingLocation,
   };
   return player;
 }
