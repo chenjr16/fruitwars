@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -15,7 +15,7 @@
   "bugs": {
     "url": "https://github.com/chenjr16/fruitwars/issues"
   },
-  "homepage": "https://github.com/chenjr16/fruitwars#readme",
+  "homepage": "https://chenjr16.github.io/fruitwars/front-end/index.html",
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.17.1"
