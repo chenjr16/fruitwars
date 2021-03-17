@@ -23,7 +23,9 @@
     <div class="wrapperLayout">
       <section></section>
       <section class="center"><h3 id="player">player1</h3></section>
-      <section class="center"><h3>Current Balance: $???</h3></section>
+      <section class="center">
+        <h3 id="balance">Current Balance: $???</h3>
+      </section>
       <section class="center"><h3 id="cityName">Seattle</h3></section>
     </div>
     <div class="wrapper">
@@ -85,11 +87,9 @@
               oninput="handleBuyAmountDrag(this)"
             />
             <p id="buyLabel"></p>
-            <button
-              type="button"
-              class="btn btn-primary"
-              id="buyConfirmBtn"
-            ></button>
+            <button type="button" class="btn btn-primary" id="buyConfirmBtn">
+              Confirm
+            </button>
           </div>
           <button type="button" class="btn btn-warning" id="buyBackBtn">
             Back
