@@ -1,5 +1,5 @@
 //remote
-const backend = "https://fruitwars.herokuapp.com/";
+//const backend = "https://fruitwars.herokuapp.com/";
 //local
 //const backend = "http://localHost:8080/";
 
@@ -12,48 +12,43 @@ document
 
 //use cookies to get player name
 let cookieArray = document.cookie.split("=");
-document.getElementById("player").innerHTML = `${cookieArray[1]}`;
+let currentPlayer = cookieArray[1];
+document.getElementById("player").innerHTML = currentPlayer;
 
 //restart game
 document.getElementById("restart").addEventListener("click", restartGame);
-displayInventory();
+displayGameInfo();
 
-//show prices
-const urlPrice = backend + "prices";
-let cityName = document.getElementById("cityName").innerHTML;
-fetch(urlPrice)
-  .then((res) => res.json())
-  .then((data) => {
-    data.forEach((user) => {
-      const { city, prices } = user;
-      let priceDisplay = "";
-      if (city === cityName) {
-        for (const [key, value] of Object.entries(prices)) {
-          priceDisplay += `<div>
-          ${key}: ${value}
-          </div>`;
-        }
-        document.getElementById("prices").innerHTML = priceDisplay;
-      }
-    });
-  });
-
-//show inventory
-
-function displayInventory() {
+//show game information
+function displayGameInfo() {
   const urlUser = backend + "users";
   fetch(urlUser)
     .then((res) => res.json())
     .then((data) => {
-      const { userName, money, inventory, location } = data[0];
-      let inventoryDisplay = "";
-      for (const [key, value] of Object.entries(inventory)) {
-        inventoryDisplay += `<div>
+      data.forEach((user) => {
+        const { userName, day, money, inventory, location } = user;
+        if (userName === currentPlayer) {
+          let inventoryDisplay = "";
+          let priceDisplay = "";
+          for (const [key, value] of Object.entries(inventory)) {
+            inventoryDisplay += `<div>
           ${key}: ${value}
           </div>`;
-      }
-      document.getElementById("inventory").innerHTML = inventoryDisplay;
-      document.getElementById("balance").innerHTML = money;
+          }
+          const { city, prices } = location;
+          for (const [key, value] of Object.entries(prices)) {
+            priceDisplay += `<div>
+          ${key}: ${value}
+          </div>`;
+          }
+
+          document.getElementById("balance").innerHTML = `$ ${money}`;
+          document.getElementById("cityName").innerHTML = city;
+          document.getElementById("day").innerHTML = `Day: ${day}`;
+          document.getElementById("inventory").innerHTML = inventoryDisplay;
+          document.getElementById("prices").innerHTML = priceDisplay;
+        }
+      });
     });
 }
 
