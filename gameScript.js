@@ -12,48 +12,43 @@ document
 
 //use cookies to get player name
 let cookieArray = document.cookie.split("=");
-document.getElementById("player").innerHTML = `${cookieArray[1]}`;
+let currentPlayer = cookieArray[1];
+document.getElementById("player").innerHTML = currentPlayer;
 
 //restart game
 document.getElementById("restart").addEventListener("click", restartGame);
-displayInventory();
+displayGameInfo();
 
-//show prices
-const urlPrice = backend + "prices";
-let cityName = document.getElementById("cityName").innerHTML;
-fetch(urlPrice)
-  .then((res) => res.json())
-  .then((data) => {
-    data.forEach((user) => {
-      const { city, prices } = user;
-      let priceDisplay = "";
-      if (city === cityName) {
-        for (const [key, value] of Object.entries(prices)) {
-          priceDisplay += `<div>
-          ${key}: ${value}
-          </div>`;
-        }
-        document.getElementById("prices").innerHTML = priceDisplay;
-      }
-    });
-  });
-
-//show inventory
-
-function displayInventory() {
+//show game information
+function displayGameInfo() {
   const urlUser = backend + "users";
   fetch(urlUser)
     .then((res) => res.json())
     .then((data) => {
-      const { userName, money, inventory, location } = data[0];
-      let inventoryDisplay = "";
-      for (const [key, value] of Object.entries(inventory)) {
-        inventoryDisplay += `<div>
+      data.forEach((user) => {
+        const { userName, day, money, inventory, location } = user;
+        if (userName === currentPlayer) {
+          let inventoryDisplay = "";
+          let priceDisplay = "";
+          for (const [key, value] of Object.entries(inventory)) {
+            inventoryDisplay += `<div>
           ${key}: ${value}
           </div>`;
-      }
-      document.getElementById("inventory").innerHTML = inventoryDisplay;
-      document.getElementById("balance").innerHTML = money;
+          }
+          const { city, prices } = location;
+          for (const [key, value] of Object.entries(prices)) {
+            priceDisplay += `<div>
+          ${key}: ${value}
+          </div>`;
+          }
+
+          document.getElementById("balance").innerHTML = `$ ${money}`;
+          document.getElementById("cityName").innerHTML = city;
+          document.getElementById("day").innerHTML = `Day: ${day}`;
+          document.getElementById("inventory").innerHTML = inventoryDisplay;
+          document.getElementById("prices").innerHTML = priceDisplay;
+        }
+      });
     });
 }
 
@@ -67,6 +62,10 @@ function restartGame() {
 function switchToBuyControl() {
   document.getElementById("defaultControl").style.display = "none";
   document.getElementById("buyControl").style.display = "block";
+  document.getElementById("buyFruitSelector").value = "none";
+  document.getElementById("buyAmount").value = 0;
+  document.getElementById("buyLabel").innerHTML = "0($0)";
+  document.getElementById("buyAmount").setAttribute("max", "0");
 }
 
 //show sell control panel
@@ -126,11 +125,38 @@ function handleSellAmountDrag(evt) {
   })`;
 }
 
-function handleBuySelector(evt) {
+async function handleBuySelector(evt) {
   //console.log(evt);
-  //console.log(evt.value);
+  const fruit = evt.value;
   // To-do: just setting a value for testing. This should be read from the server.
-  document.getElementById("buyAmount").setAttribute("cost", "3");
+  let cookieArray = document.cookie.split("=");
+  const user = cookieArray[1];
+  const payload = { userName: user };
+  const playerData = await fetch(backend + "getPlayer", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  })
+    .then((res) => {
+      return res.json();
+    })
+    .then((data) => {
+      return data;
+    });
+  const playerMoney = playerData.money;
+  const fruitCost = playerData.location.prices[fruit];
+  console.log("playerMoney: " + playerMoney);
+  console.log("fruitCost: " + fruitCost);
+  document.getElementById("buyAmount").value = 0;
+  document.getElementById("buyLabel").innerHTML = "0($0)";
+  if (fruit === "none") {
+    document.getElementById("buyAmount").setAttribute("cost", "0");
+    document.getElementById("buyAmount").setAttribute("max", "0");
+  } else {
+    const maxPurchase = playerMoney / fruitCost;
+    document.getElementById("buyAmount").setAttribute("cost", fruitCost);
+    document.getElementById("buyAmount").setAttribute("max", maxPurchase);
+  }
 }
 
 function handleBuyAmountDrag(evt) {
@@ -140,9 +166,12 @@ function handleBuyAmountDrag(evt) {
   const cost = evt.getAttribute("cost");
   //console.log(amount);
   //console.log(cost);
-  document.getElementById("buyLabel").innerHTML = `${amount}(+$${
+  document.getElementById("buyLabel").innerHTML = `${amount}(-$${
     amount * cost
   })`;
+
+  // Not sure why this was added into the buyAmount slider event handler;
+  /*
   // creating random Event Display
   const autoTimed = setInterval(randomLine, 10000);
   let events = [
@@ -156,4 +185,5 @@ function handleBuyAmountDrag(evt) {
     let randomLines = Math.floor(Math.random() * events.length);
     document.getElementById("eventLines").innerHTML = events[randomLines];
   }
+  */
 }
