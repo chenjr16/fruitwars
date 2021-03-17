@@ -1,8 +1,7 @@
-// local
-//const backend = "http://localhost:8080/";
-
-// remote
+//remote
 const backend = "https://fruitwars.herokuapp.com/";
+//local
+//const backend = "http://localHost:8080/";
 
 document
   .getElementById("playGameBtn")
@@ -53,6 +52,7 @@ function generateNewPlayer(playerName) {
   const player = {
     userName: playerName,
     money: 2000,
+    day: 0,
     inventory: {
       pineapple: 0,
       apples: 0,
