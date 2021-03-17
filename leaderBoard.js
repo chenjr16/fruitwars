@@ -5,7 +5,7 @@ const backend = "https://fruitwars.herokuapp.com/";
 // const backend = "http://localHost:8080/";
 
 //displaying the player info and scores on LeaderBoard
-const URL = backend + "players";
+const URL = backend + "leaderboard";
 fetch(URL)
   .then((res) => res.json())
   .then((users) => displayResults(users))
