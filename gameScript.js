@@ -1,4 +1,5 @@
 const backend = "https://fruitwars.herokuapp.com/";
+//const backend = "http://localhost:8080/";
 
 //Default control panel
 document.getElementById("buy").addEventListener("click", switchToBuyControl);
@@ -9,15 +10,16 @@ document
 
 //use cookies to get player name
 let cookieArray = document.cookie.split("=");
-document.getElementById("player").innerHTML = `Player: ${cookieArray[1]}`;
+document.getElementById("player").innerHTML = `${cookieArray[1]}`;
 
 //restart game
 document.getElementById("restart").addEventListener("click", restartGame);
+displayInventory();
 
 //show prices
-const URL = backend + "prices";
+const urlPrice = backend + "prices";
 let cityName = document.getElementById("cityName").innerHTML;
-fetch(URL)
+fetch(urlPrice)
   .then((res) => res.json())
   .then((data) => {
     data.forEach((user) => {
@@ -33,6 +35,24 @@ fetch(URL)
       }
     });
   });
+
+//show inventory
+
+function displayInventory() {
+  const urlUser = backend + "users";
+  fetch(urlUser)
+    .then((res) => res.json())
+    .then((data) => {
+      const { userName, money, inventory, location } = data[0];
+      let inventoryDisplay = "";
+      for (const [key, value] of Object.entries(inventory)) {
+        inventoryDisplay += `<div>
+          ${key}: ${value}
+          </div>`;
+      }
+      document.getElementById("inventory").innerHTML = inventoryDisplay;
+    });
+}
 
 //restart function
 function restartGame() {
