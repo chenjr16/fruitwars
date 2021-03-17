@@ -92,13 +92,32 @@ function handleSellSelector(evt) {
 }
 
 function handleSellAmountDrag(evt) {
-  console.log(evt);
-  console.log(evt.value);
+  //console.log(evt);
+  //console.log(evt.value);
   const amount = evt.value;
   const cost = evt.getAttribute("cost");
   console.log(amount);
   console.log(cost);
   document.getElementById("sellLabel").innerHTML = `${amount}(+$${
+    amount * cost
+  })`;
+}
+
+function handleBuySelector(evt) {
+  //console.log(evt);
+  //console.log(evt.value);
+  // To-do: just setting a value for testing. This should be read from the server.
+  document.getElementById("buyAmount").setAttribute("cost", "3");
+}
+
+function handleBuyAmountDrag(evt) {
+  //console.log(evt);
+  //console.log(evt.value);
+  const amount = evt.value;
+  const cost = evt.getAttribute("cost");
+  //console.log(amount);
+  //console.log(cost);
+  document.getElementById("buyLabel").innerHTML = `${amount}(+$${
     amount * cost
   })`;
 }
