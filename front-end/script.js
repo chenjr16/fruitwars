@@ -1,5 +1,5 @@
 // local
-const backend = "http://localhost:8080/";
+const backend = "https://fruitwars.herokuapp.com/";
 // remote
 //const backend = "";
 
