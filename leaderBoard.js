@@ -1,24 +1,37 @@
 // Remote
-const backend = "https://fruitwars.herokuapp.com/";
+// const backend = "https://fruitwars.herokuapp.com/";
 
 // local
-// const backend = "http://localHost:8080/";
+const backend = "http://localHost:8080/";
 
 //displaying the player info and scores on LeaderBoard
 const URL = backend + "players";
 fetch(URL)
   .then((res) => res.json())
+  .then((users) => sortPlayersByScore(users))
   .then((users) => displayResults(users))
   .catch((err) => console.log(err));
 
+function sortPlayersByScore(users) {
+  return users.sort(function (a, b) {
+    console.log(a.currentAmount);
+    return b.currentAmount - a.currentAmount;
+  });
+}
+
 function displayResults(users) {
+  console.log(users);
   document.getElementById("list").innerHTML = "";
-  for (let i = 0; i < 5; i++) {
+  let size = 5;
+  if (users.length < size) {
+    size = users.length;
+  }
+  for (let i = 0; i < size; i++) {
     const user = users[i];
     const { playerName, days, currentAmount } = user;
     const displayCard = `
     <div class="item">
-      <div class="rank">1</div>
+      <div class="rank">${i + 1}</div>
       <div class="name">${playerName}</div>
       <div class="days">${days}</div>
       <div class="score">${currentAmount}</div>
