@@ -26,7 +26,7 @@ document.getElementById("player").innerHTML = currentPlayer;
 //restart game
 document.getElementById("restart").addEventListener("click", restartGame);
 document.getElementById("end").addEventListener("click", handleEndGame);
-document.getElementById("leader").addEventListener("click", handleLeaderBoard)
+document.getElementById("leader").addEventListener("click", handleLeaderBoard);
 displayGameInfo();
 
 //go to leaderBoard
@@ -146,6 +146,7 @@ function handleCityClick(evt) {
                     inventory,
                     location,
                   };
+                  userData.location.prices = getCurrentPrices(city);
                   fetch(backend + "updatePlayer", {
                     method: "PUT",
                     headers: { "Content-Type": "application/json" },
@@ -357,17 +358,23 @@ async function handleEndGame() {
     .then((res) => res.json())
     .then((data) => {
       data.forEach((user) => {
-        const { userName, day, money} = user;
+        const { userName, day, money } = user;
         if (userName === currentPlayer) {
           console.log("End Game");
-          const playerInfo = {playerName:userName, days:day, currentAmount:money}
-          await fetch(backend + "updateLeaderboard", {
+          const playerInfo = {
+            playerName: userName,
+            days: day,
+            currentAmount: money,
+          };
+          fetch(backend + "updateLeaderboard", {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({playerData:playerInfo}),
-          }).then(res => {
-          document.getElementById("endGame").innerHTML = `Congratulations, you completed ${day}days of game, and won $ ${money}!`
-          })
+            body: JSON.stringify({ playerData: playerInfo }),
+          }).then((res) => {
+            document.getElementById(
+              "endGame"
+            ).innerHTML = `Congratulations, you completed ${day}days of game, and won $ ${money}!`;
+          });
         }
       });
     });
@@ -500,4 +507,73 @@ function getRandomFruit() {
     "avacadoes",
   ];
   return fruits[Math.floor(Math.random() * 100) % 6];
+}
+
+function getCurrentPrices(city) {
+  switch (city) {
+    case "Honolulu":
+      return {
+        pineapple: random(5, 10),
+        apples: random(10, 20),
+        cherries: random(20, 40),
+        strawberries: random(15, 60),
+        keyLimes: random(30, 80),
+        avacadoes: random(50, 100),
+      };
+      break;
+    case "Seattle":
+      return {
+        pineapple: random(10, 20),
+        apples: random(5, 15),
+        cherries: random(10, 20),
+        strawberries: random(10, 40),
+        keyLimes: random(20, 80),
+        avacadoes: random(60, 150),
+      };
+      break;
+    case "New York":
+      return {
+        pineapple: random(5, 25),
+        apples: random(5, 15),
+        cherries: random(20, 50),
+        strawberries: random(20, 50),
+        keyLimes: random(25, 75),
+        avacadoes: random(60, 150),
+      };
+      break;
+    case "Los Angeles":
+      return {
+        pineapple: random(15, 25),
+        apples: random(15, 30),
+        cherries: random(15, 50),
+        strawberries: random(10, 35),
+        keyLimes: random(20, 50),
+        avacadoes: random(10, 50),
+      };
+      break;
+    case "Miami":
+      return {
+        pineapple: random(5, 15),
+        apples: random(20, 45),
+        cherries: random(30, 50),
+        strawberries: random(25, 55),
+        keyLimes: random(15, 35),
+        avacadoes: random(25, 100),
+      };
+      break;
+    case "Denver":
+      return {
+        pineapple: random(15, 35),
+        apples: random(20, 50),
+        cherries: random(35, 75),
+        strawberries: random(5, 15),
+        keyLimes: random(30, 50),
+        avacadoes: random(50, 100),
+      };
+      break;
+  }
+}
+
+function random(min, max) {
+  return Math.floor(Math.random() * (max - min) + min);
 }
