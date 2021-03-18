@@ -146,6 +146,9 @@ function handleCityClick(evt) {
                     method: "PUT",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ playerData: userData }),
+                  }).then((res) => {
+                    displayGameInfo();
+                    handleBackBtnClick();
                   });
                 }
               });
@@ -153,8 +156,8 @@ function handleCityClick(evt) {
         }
       });
     });
-  displayGameInfo();
-  handleBackBtnClick();
+  //displayGameInfo();
+  //handleBackBtnClick();
 }
 
 async function handleSellSelector(evt) {
