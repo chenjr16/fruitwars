@@ -21,14 +21,14 @@ p {
 }
 #info {
   position: absolute;
-  left: 370px;
-  top: 730px;
+  left: 450px;
+  top: 760px;
 }
 
 #buttons {
   position: absolute;
   left: 650px;
-  top: 850px;
+  top: 60px;
 }
 
 #playGameBtn {
