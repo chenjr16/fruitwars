@@ -113,9 +113,48 @@ function handleBackBtnClick() {
 }
 
 function handleCityClick(evt) {
-  console.log(evt);
+  //console.log(evt);
+  const cityClicked = evt.value;
   //console.log(evt.value);
   // To-Do: handle changing city
+  const urlUser = backend + "users";
+  let userData = {};
+  fetch(urlUser)
+    .then((res) => res.json())
+    .then((data) => {
+      data.forEach((user) => {
+        let { userName, day, money, inventory, location } = user;
+        if (userName === currentPlayer) {
+          day += 1;
+          let urlLocation = backend + "prices";
+          fetch(urlLocation)
+            .then((res) => res.json())
+            .then((data) => {
+              data.forEach((locPrice) => {
+                const { city, prices } = locPrice;
+                if (cityClicked === city) {
+                  location.city = city;
+                  location.prices = prices;
+                  userData = {
+                    userName,
+                    day,
+                    money,
+                    inventory,
+                    location,
+                  };
+                  fetch(backend + "updatePlayer", {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ playerData: userData }),
+                  });
+                }
+              });
+            });
+        }
+      });
+    });
+  displayGameInfo();
+  handleBackBtnClick();
 }
 
 async function handleSellSelector(evt) {
