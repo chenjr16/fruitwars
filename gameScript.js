@@ -23,10 +23,14 @@ let cookieArray = document.cookie.split("=");
 let currentPlayer = cookieArray[1];
 document.getElementById("player").innerHTML = currentPlayer;
 
-//restart game
+//restart game, end game, go to leaderboard buttons
 document.getElementById("restart").addEventListener("click", restartGame);
-document.getElementById("end").addEventListener("click", handleEndGame);
-document.getElementById("leader").addEventListener("click", handleLeaderBoard)
+document.getElementById("end").addEventListener("click", function () {
+  if (confirm("Are you sure you want to end this game?")) {
+    handleEndGame();
+  }
+});
+document.getElementById("leader").addEventListener("click", handleLeaderBoard);
 displayGameInfo();
 
 //go to leaderBoard
@@ -121,6 +125,7 @@ function handleBackBtnClick() {
 
 function handleCityClick(evt) {
   const cityClicked = evt.value;
+  const dayLimit = 30;
   const urlUser = backend + "users";
   let userData = {};
   fetch(urlUser)
@@ -128,7 +133,7 @@ function handleCityClick(evt) {
     .then((data) => {
       data.forEach((user) => {
         let { userName, day, money, inventory, location } = user;
-        if (userName === currentPlayer) {
+        if (userName === currentPlayer && day < dayLimit) {
           day += 1;
           let urlLocation = backend + "prices";
           fetch(urlLocation)
@@ -158,6 +163,8 @@ function handleCityClick(evt) {
                 }
               });
             });
+        } else {
+          handleEndGame();
         }
       });
     });
@@ -350,24 +357,30 @@ async function handleBuyConfirmBtnClick() {
   displayGameInfo();
 }
 
-async function handleEndGame() {
+function handleEndGame() {
   const urlUser = backend + "users";
   //const dayLimit = 30;
-  await fetch(urlUser)
+  fetch(urlUser)
     .then((res) => res.json())
     .then((data) => {
       data.forEach((user) => {
-        const { userName, day, money} = user;
+        const { userName, day, money } = user;
         if (userName === currentPlayer) {
           console.log("End Game");
-          const playerInfo = {playerName:userName, days:day, currentAmount:money}
-          await fetch(backend + "updateLeaderboard", {
+          const playerInfo = {
+            playerName: userName,
+            days: day,
+            currentAmount: money,
+          };
+          fetch(backend + "updateLeaderboard", {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({playerData:playerInfo}),
-          }).then(res => {
-          document.getElementById("endGame").innerHTML = `Congratulations, you completed ${day}days of game, and won $ ${money}!`
-          })
+            body: JSON.stringify({ playerData: playerInfo }),
+          }).then((res) => {
+            document.getElementById(
+              "endGame"
+            ).innerHTML = `Congratulations, you completed ${day} days of game, and won $ ${money}!`;
+          });
         }
       });
     });
