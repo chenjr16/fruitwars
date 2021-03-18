@@ -25,7 +25,14 @@ document.getElementById("player").innerHTML = currentPlayer;
 
 //restart game
 document.getElementById("restart").addEventListener("click", restartGame);
+document.getElementById("end").addEventListener("click", handleEndGame);
+document.getElementById("leader").addEventListener("click", handleLeaderBoard)
 displayGameInfo();
+
+//go to leaderBoard
+function handleLeaderBoard() {
+  location.href = "leaderboard.html";
+}
 
 //show game information
 function displayGameInfo() {
@@ -342,3 +349,27 @@ async function handleBuyConfirmBtnClick() {
   handleBuySelector(document.getElementById("buyFruitSelector"));
   displayGameInfo();
 }
+
+async function handleEndGame() {
+  const urlUser = backend + "users";
+  //const dayLimit = 30;
+  await fetch(urlUser)
+    .then((res) => res.json())
+    .then((data) => {
+      data.forEach((user) => {
+        const { userName, day, money} = user;
+        if (userName === currentPlayer) {
+          console.log("End Game");
+          const playerInfo = {playerName:userName, days:day, currentAmount:money}
+          await fetch(backend + "updateLeaderboard", {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({playerData:playerInfo}),
+          }).then(res => {
+          document.getElementById("endGame").innerHTML = `Congratulations, you completed ${day}days of game, and won $ ${money}!`
+          })
+        }
+      });
+    });
+}
+
