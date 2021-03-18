@@ -1,0 +1,65 @@
+@import url("https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Kaushan+Script&family=Ranchers&family=Ravi+Prakash&family=Sacramento&family=Shadows+Into+Light&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Caveat&display=swap");
+
+body {
+  background-image: url("https://d27nqrvkk22y65.cloudfront.net/cover/image/41757/big_17d0fc3fd0.jpg");
+  background-repeat: no-repeat;
+  /* background-attachment: fixed; */
+  background-size: cover;
+}
+
+h1 {
+  position: absolute;
+  left: 680px;
+  top: 170px;
+  font-family: "Caveat", cursive;
+}
+p {
+  font-family: "Gloria Hallelujah", cursive;
+  font-size: 30px;
+  color: black;
+}
+#info {
+  position: absolute;
+  left: 450px;
+  top: 760px;
+}
+
+#buttons {
+  position: absolute;
+  left: 650px;
+  top: 60px;
+}
+
+#playGameBtn {
+  transform: all 0.2s;
+  border-radius: 2em;
+  font-size: 20px;
+  padding: 0.4em 1.4em;
+}
+
+#leaderBoardBtn {
+  transform: all 0.2s;
+  border-radius: 2em;
+  font-size: 20px;
+  padding: 0.4em 1.4em;
+}
+
+#playGameBtn:hover {
+  border-color: rgba(255, 255, 255, 1);
+  transform: scale(1.2);
+  border-radius: 2em;
+}
+
+#playerName {
+  transform: all 0.2s;
+  border-radius: 2em;
+  font-size: 20px;
+  padding: 0.4em 1.4em;
+}
+
+#leaderBoardBtn:hover {
+  border-color: rgba(255, 255, 255, 1);
+  transform: scale(1.2);
+  border-radius: 2em;
+}
