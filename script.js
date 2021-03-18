@@ -12,9 +12,7 @@ document
 
 async function handlePlayGameBtnClick() {
   const playerName = document.getElementById("playerName").value;
-  //console.log(`playGameBtn was clicked...\nplayer name is ${playerName}.`);
   const URL = backend + "addPlayer";
-  //console.log(URL);
   if (playerName) {
     const urlPrice = backend + "prices";
     let locPrices = {};
@@ -23,12 +21,9 @@ async function handlePlayGameBtnClick() {
         return res.json();
       })
       .then((data) => {
-        console.log("In Fetch....");
-        console.log(data);
         locPrices = data[Math.floor(Math.random() * 100) % 6];
       });
     const player = generateNewPlayer(playerName, locPrices);
-    console.log(player);
     const payload = { playerData: player };
     // check if playerName is free...
     await fetch(URL, {
@@ -36,7 +31,6 @@ async function handlePlayGameBtnClick() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     }).then((res) => {
-      console.log(res);
       if (res.status === 200) {
         startGame(playerName);
         location.href = "game.html";
@@ -48,7 +42,6 @@ async function handlePlayGameBtnClick() {
 }
 
 function handleLeaderBoardBtnClick() {
-  console.log("leaderBoardBtn was clicked...");
   location.href = "leaderboard.html";
 }
 
@@ -78,12 +71,10 @@ function generateNewPlayer(playerName, startingLocation) {
 }
 
 function startGame(user) {
-  console.log("In startGame()...");
   setCookie("userName", user, 2);
 }
 
 function handleDuplicateUser(user) {
-  console.log("In handleDuplicateUser()...");
   // code to handle dupe
   alert(`The name ${user} is already in use`);
 }

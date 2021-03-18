@@ -176,9 +176,6 @@ function handleCityClick(evt) {
 }
 
 async function handleSellSelector(evt) {
-  //console.log(evt);
-  //console.log(evt.value);
-  // To-do: just setting a value for testing. This should be read from the server.
   const fruit = evt.value;
   let cookieArray = document.cookie.split("=");
   const user = cookieArray[1];
@@ -196,8 +193,6 @@ async function handleSellSelector(evt) {
     });
   const fruitInventory = playerData.inventory[fruit];
   const fruitCost = playerData.location.prices[fruit];
-  console.log("fruitInventory: " + fruitInventory);
-  console.log("fruitCost: " + fruitCost);
   document.getElementById("sellLabel").innerHTML = "0($0)";
   if (fruit === "none") {
     document.getElementById("sellAmount").setAttribute("cost", "0");
@@ -209,19 +204,14 @@ async function handleSellSelector(evt) {
 }
 
 function handleSellAmountDrag(evt) {
-  //console.log(evt);
-  //console.log(evt.value);
   const amount = evt.value;
   const cost = evt.getAttribute("cost");
-  console.log(amount);
-  console.log(cost);
   document.getElementById("sellLabel").innerHTML = `${amount}(+$${
     amount * cost
   })`;
 }
 
 async function handleBuySelector(evt) {
-  //console.log(evt);
   const fruit = evt.value;
   let cookieArray = document.cookie.split("=");
   const user = cookieArray[1];
@@ -239,8 +229,6 @@ async function handleBuySelector(evt) {
     });
   const playerMoney = playerData.money;
   const fruitCost = playerData.location.prices[fruit];
-  console.log("playerMoney: " + playerMoney);
-  console.log("fruitCost: " + fruitCost);
   document.getElementById("buyAmount").value = 0;
   document.getElementById("buyLabel").innerHTML = "0($0)";
   if (fruit === "none") {
@@ -254,32 +242,11 @@ async function handleBuySelector(evt) {
 }
 
 function handleBuyAmountDrag(evt) {
-  //console.log(evt);
-  //console.log(evt.value);
   const amount = evt.value;
   const cost = evt.getAttribute("cost");
-  //console.log(amount);
-  //console.log(cost);
   document.getElementById("buyLabel").innerHTML = `${amount}(-$${
     amount * cost
   })`;
-
-  // Not sure why this was added into the buyAmount slider event handler;
-  /*
-  // creating random Event Display
-  const autoTimed = setInterval(randomLine, 10000);
-  let events = [
-    "Trade war is here... over supply of all farm produce, all fruits price dropped dramatically. Trade wisely.",
-    "Due to inclement weather shipment has been delayed. Shortage of fruits in the market. Trade wisely. ",
-    "Summer is here and the demand for fruits has gone up... Time to make $",
-    "More than 50% of the fruits nationwide were damaged due to pests. Demand for fruits has gone up. Trade wisely.",
-    "You might be able to find better rates in other cities...",
-  ];
-  function randomLine() {
-    let randomLines = Math.floor(Math.random() * events.length);
-    document.getElementById("eventLines").innerHTML = events[randomLines];
-  }
-  */
 }
 
 async function handleSellConfirmBtnClick() {
@@ -321,7 +288,6 @@ async function handleSellConfirmBtnClick() {
 }
 
 async function handleBuyConfirmBtnClick() {
-  //console.log("In handleBuyConfirmBtnClick()...");
   const fruit = document.getElementById("buyFruitSelector").value;
   if (fruit !== "none") {
     let cookieArray = document.cookie.split("=");
@@ -362,7 +328,6 @@ async function handleBuyConfirmBtnClick() {
 
 function handleEndGame() {
   const urlUser = backend + "users";
-  //const dayLimit = 30;
   fetch(urlUser)
     .then((res) => res.json())
     .then((data) => {
@@ -381,7 +346,7 @@ function handleEndGame() {
             body: JSON.stringify({ playerData: playerInfo }),
           }).then((res) => {
             alert(
-              `Congratulations, you completed ${day} days of game, and won $ ${money}!`
+              `Congratulations ${userName}, you completed ${day} days of game, and won $ ${money}!`
             );
             document.getElementById("defaultControl").style.display = "none";
             document.getElementById("buyControl").style.display = "none";
