@@ -62,7 +62,7 @@ function setCookie(cName, cValue, exHours) {
 function generateNewPlayer(playerName, startingLocation) {
   const player = {
     userName: playerName,
-    money: 2000,
+    money: 100,
     day: 0,
     inventory: {
       pineapple: 0,
@@ -84,6 +84,6 @@ function startGame(user) {
 
 function handleDuplicateUser(user) {
   console.log("In handleDuplicateUser()...");
-
   // code to handle dupe
+  alert(`The name ${user} is already in use`);
 }
