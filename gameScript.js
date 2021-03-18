@@ -400,10 +400,10 @@ function handleEndGame() {
 
 function triggerEvent() {
   const randNumber = (Math.floor(Math.random() * 100) % 60) + 1;
-  if (randNumber <= 50) {
+  if (randNumber <= 40) {
     document.getElementById("eventLines").innerHTML =
       "It's time to get rich... Good Luck!";
-  } else if (randNumber <= 55) {
+  } else if (randNumber <= 45) {
     // positive event
     generatePositveEvent();
   } else {
@@ -532,7 +532,7 @@ function getCurrentPrices(city) {
     case "Honolulu":
       return {
         pineapple: random(5, 10),
-        apples: random(10, 20),
+        apples: random(5, 20),
         cherries: random(20, 40),
         strawberries: random(15, 60),
         keyLimes: random(30, 80),
@@ -542,41 +542,41 @@ function getCurrentPrices(city) {
     case "Seattle":
       return {
         pineapple: random(10, 20),
-        apples: random(5, 15),
-        cherries: random(10, 20),
+        apples: random(5, 20),
+        cherries: random(10, 45),
         strawberries: random(10, 40),
         keyLimes: random(20, 80),
-        avacadoes: random(60, 150),
+        avacadoes: random(60, 120),
       };
       break;
     case "New York":
       return {
-        pineapple: random(5, 25),
-        apples: random(5, 15),
+        pineapple: random(15, 25),
+        apples: random(10, 25),
         cherries: random(20, 50),
         strawberries: random(20, 50),
         keyLimes: random(25, 75),
-        avacadoes: random(60, 150),
+        avacadoes: random(75, 120),
       };
       break;
     case "Los Angeles":
       return {
         pineapple: random(15, 25),
-        apples: random(15, 30),
+        apples: random(10, 30),
         cherries: random(15, 50),
-        strawberries: random(10, 35),
+        strawberries: random(10, 45),
         keyLimes: random(20, 50),
-        avacadoes: random(10, 50),
+        avacadoes: random(70, 110),
       };
       break;
     case "Miami":
       return {
-        pineapple: random(5, 15),
-        apples: random(20, 45),
-        cherries: random(30, 50),
+        pineapple: random(10, 30),
+        apples: random(5, 30),
+        cherries: random(20, 50),
         strawberries: random(25, 55),
-        keyLimes: random(15, 35),
-        avacadoes: random(25, 100),
+        keyLimes: random(15, 60),
+        avacadoes: random(45, 110),
       };
       break;
     case "Denver":
@@ -584,9 +584,9 @@ function getCurrentPrices(city) {
         pineapple: random(15, 35),
         apples: random(20, 50),
         cherries: random(35, 75),
-        strawberries: random(5, 15),
-        keyLimes: random(30, 50),
-        avacadoes: random(50, 100),
+        strawberries: random(5, 40),
+        keyLimes: random(25, 65),
+        avacadoes: random(50, 115),
       };
       break;
   }
