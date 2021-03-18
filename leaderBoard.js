@@ -1,8 +1,8 @@
 // Remote
-// const backend = "https://fruitwars.herokuapp.com/";
+const backend = "https://fruitwars.herokuapp.com/";
 
 // local
-const backend = "http://localHost:8080/";
+// const backend = "http://localHost:8080/";
 
 //displaying the player info and scores on LeaderBoard
 const URL = backend + "players";
