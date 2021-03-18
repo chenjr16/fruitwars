@@ -147,6 +147,7 @@ function handleCityClick(evt) {
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ playerData: userData }),
                   }).then((res) => {
+                    triggerEvent();
                     displayGameInfo();
                     handleBackBtnClick();
                   });
@@ -300,6 +301,7 @@ async function handleSellConfirmBtnClick() {
       body: JSON.stringify(updatePayload),
     });
   }
+  triggerEvent();
   handleSellSelector(document.getElementById("fruitSelector"));
   displayGameInfo();
 }
@@ -339,6 +341,136 @@ async function handleBuyConfirmBtnClick() {
       body: JSON.stringify(updatePayload),
     });
   }
+  triggerEvent();
   handleBuySelector(document.getElementById("buyFruitSelector"));
   displayGameInfo();
+}
+
+function triggerEvent() {
+  const randNumber = (Math.floor(Math.random() * 100) % 60) + 1;
+  if (randNumber <= 50) {
+    document.getElementById("eventLines").innerHTML =
+      "It's time to get rich... Good Luck!";
+  } else if (randNumber <= 55) {
+    // positive event
+    generatePositveEvent();
+  } else {
+    // negative event
+    generateNegativeEvent();
+  }
+}
+
+async function generatePositveEvent() {
+  let cookieArray = document.cookie.split("=");
+  const user = cookieArray[1];
+  const payload = { userName: user };
+  const userData = await fetch(backend + "getPlayer", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  })
+    .then((res) => {
+      return res.json();
+    })
+    .then((data) => {
+      return data;
+    });
+
+  const randomNumber = Math.floor(Math.random() * 100) % 2;
+  if (randomNumber === 0) {
+    const userMoney = userData.money;
+    const moneyGained = (Math.floor(Math.random() * 10000000) % userMoney) + 1;
+    userData.money += moneyGained;
+    document.getElementById(
+      "eventLines"
+    ).innerHTML = `You won $${moneyGained} in the lottery.`;
+  } else {
+    const randFruit = getRandomFruit();
+    const randFruitAmount = (Math.floor(Math.random() * 100) % 50) + 1;
+    userData.inventory[randFruit] += randFruitAmount;
+    document.getElementById(
+      "eventLines"
+    ).innerHTML = `You found ${randFruitAmount} units of ${randFruit} in storage.`;
+  }
+
+  const updatePayload = { playerData: userData };
+  await fetch(backend + "updatePlayer", {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(updatePayload),
+  });
+  displayGameInfo();
+}
+
+async function generateNegativeEvent() {
+  let cookieArray = document.cookie.split("=");
+  const user = cookieArray[1];
+  const payload = { userName: user };
+  const userData = await fetch(backend + "getPlayer", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  })
+    .then((res) => {
+      return res.json();
+    })
+    .then((data) => {
+      return data;
+    });
+
+  const randomNumber = Math.floor(Math.random() * 100) % 2;
+  if (randomNumber === 0) {
+    const userMoney = userData.money;
+    const moneyLost = (Math.floor(Math.random() * 10000000) % userMoney) + 1;
+    userData.money -= moneyLost;
+    document.getElementById(
+      "eventLines"
+    ).innerHTML = `You mugged and lost $${moneyLost}.`;
+  } else {
+    const fruits = [
+      "pineapple",
+      "apples",
+      "cherries",
+      "strawberries",
+      "keyLimes",
+      "avacadoes",
+    ];
+    const fruitArr = [];
+    const fruitCntArr = [];
+    for (let i = 0; i < fruits.length; i++) {
+      if (userData.inventory[fruits[i]] > 0) {
+        fruitArr.push(fruits[i]);
+        fruitCntArr.push(userData.inventory[fruits[i]]);
+      }
+    }
+    if (fruitArr.length > 0) {
+      const randomNum = Math.floor(Math.random() * 100) % fruitArr.length;
+      const fruitRotAmount =
+        Math.floor(Math.random() * 100) % fruitCntArr[randomNum];
+      document.getElementById(
+        "eventLines"
+      ).innerHTML = `You have lost ${fruitRotAmount} units of ${fruitArr[randomNum]} due to poor storage conditions.`;
+      userData.inventory[fruitArr[randomNum]] -= fruitRotAmount;
+    }
+  }
+
+  const updatePayload = { playerData: userData };
+  await fetch(backend + "updatePlayer", {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(updatePayload),
+  });
+  displayGameInfo();
+}
+
+function getRandomFruit() {
+  const fruits = [
+    "pineapple",
+    "apples",
+    "cherries",
+    "strawberries",
+    "keyLimes",
+    "avacadoes",
+  ];
+  return fruits[Math.floor(Math.random() * 100) % 6];
 }
