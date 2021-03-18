@@ -374,6 +374,7 @@ function handleEndGame() {
             days: day,
             currentAmount: money,
           };
+          const currentPlayer = { userName };
           fetch(backend + "updateLeaderboard", {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
@@ -383,6 +384,14 @@ function handleEndGame() {
               `Congratulations, you completed ${day} days of game, and won $ ${money}!`
             );
             document.getElementById("defaultControl").style.display = "none";
+            document.getElementById("buyControl").style.display = "none";
+            document.getElementById("sellControl").style.display = "none";
+            document.getElementById("travelControl").style.display = "none";
+            fetch(backend + "removeActivePlayer", {
+              method: "DELETE",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(currentPlayer),
+            });
           });
         }
       });
