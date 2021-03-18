@@ -297,7 +297,45 @@ async function handleSellConfirmBtnClick() {
       body: JSON.stringify(updatePayload),
     });
   }
+  handleSellSelector(document.getElementById("fruitSelector"));
   displayGameInfo();
 }
 
-async function handleBuyConfirmBtnClick() {}
+async function handleBuyConfirmBtnClick() {
+  //console.log("In handleBuyConfirmBtnClick()...");
+  const fruit = document.getElementById("buyFruitSelector").value;
+  if (fruit !== "none") {
+    let cookieArray = document.cookie.split("=");
+    const user = cookieArray[1];
+    const payload = { userName: user };
+    const userData = await fetch(backend + "getPlayer", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        return data;
+      });
+
+    const userMoney = userData.money;
+    const fruitCost = userData.location.prices[fruit];
+    const buyAmount = document.getElementById("buyAmount").value;
+    const transactionTotal = fruitCost * buyAmount;
+    if (transactionTotal <= userMoney) {
+      userData.money -= transactionTotal;
+      userData.inventory[fruit] += parseInt(buyAmount);
+    }
+
+    const updatePayload = { playerData: userData };
+    await fetch(backend + "updatePlayer", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updatePayload),
+    });
+  }
+  handleBuySelector(document.getElementById("buyFruitSelector"));
+  displayGameInfo();
+}
