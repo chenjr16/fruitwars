@@ -133,38 +133,40 @@ function handleCityClick(evt) {
     .then((data) => {
       data.forEach((user) => {
         let { userName, day, money, inventory, location } = user;
-        if (userName === currentPlayer && day < dayLimit) {
+        if (userName === currentPlayer) {
           day += 1;
-          let urlLocation = backend + "prices";
-          fetch(urlLocation)
-            .then((res) => res.json())
-            .then((data) => {
-              data.forEach((locPrice) => {
-                const { city, prices } = locPrice;
-                if (cityClicked === city) {
-                  location.city = city;
-                  location.prices = prices;
-                  userData = {
-                    userName,
-                    day,
-                    money,
-                    inventory,
-                    location,
-                  };
-                  fetch(backend + "updatePlayer", {
-                    method: "PUT",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ playerData: userData }),
-                  }).then((res) => {
-                    triggerEvent();
-                    displayGameInfo();
-                    handleBackBtnClick();
-                  });
-                }
+          if (day > 30) {
+            handleEndGame();
+          } else {
+            let urlLocation = backend + "prices";
+            fetch(urlLocation)
+              .then((res) => res.json())
+              .then((data) => {
+                data.forEach((locPrice) => {
+                  const { city, prices } = locPrice;
+                  if (cityClicked === city) {
+                    location.city = city;
+                    location.prices = prices;
+                    userData = {
+                      userName,
+                      day,
+                      money,
+                      inventory,
+                      location,
+                    };
+                    fetch(backend + "updatePlayer", {
+                      method: "PUT",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({ playerData: userData }),
+                    }).then((res) => {
+                      triggerEvent();
+                      displayGameInfo();
+                      handleBackBtnClick();
+                    });
+                  }
+                });
               });
-            });
-        } else {
-          handleEndGame();
+          }
         }
       });
     });
@@ -366,7 +368,6 @@ function handleEndGame() {
       data.forEach((user) => {
         const { userName, day, money } = user;
         if (userName === currentPlayer) {
-          console.log("End Game");
           const playerInfo = {
             playerName: userName,
             days: day,
@@ -377,9 +378,10 @@ function handleEndGame() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ playerData: playerInfo }),
           }).then((res) => {
-            document.getElementById(
-              "endGame"
-            ).innerHTML = `Congratulations, you completed ${day} days of game, and won $ ${money}!`;
+            alert(
+              `Congratulations, you completed ${day} days of game, and won $ ${money}!`
+            );
+            document.getElementById("defaultControl").style.display = "none";
           });
         }
       });
