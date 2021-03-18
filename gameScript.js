@@ -1,5 +1,5 @@
 //remote
-//const backend = "https://fruitwars.herokuapp.com/";
+const backend = "https://fruitwars.herokuapp.com/";
 //local
 //const backend = "http://localHost:8080/";
 
@@ -97,7 +97,7 @@ function handleBackBtnClick() {
 }
 
 function handleCityClick(evt) {
-  //console.log(evt);
+  console.log(evt);
   //console.log(evt.value);
   // To-Do: handle changing city
 }
