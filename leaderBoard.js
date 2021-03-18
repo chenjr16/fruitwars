@@ -13,7 +13,7 @@ fetch(URL)
 
 function displayResults(users) {
   document.getElementById("list").innerHTML = "";
-  for (let i = 0; i < users.length; i++) {
+  for (let i = 0; i < 5; i++) {
     const user = users[i];
     const { playerName, days, currentAmount } = user;
     const displayCard = `
