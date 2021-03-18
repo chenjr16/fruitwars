@@ -10,6 +10,14 @@ document
   .getElementById("travel")
   .addEventListener("click", switchToTravelControl);
 
+document
+  .getElementById("sellConfirmBtn")
+  .addEventListener("click", handleSellConfirmBtnClick);
+
+document
+  .getElementById("buyConfirmBtn")
+  .addEventListener("click", handleBuyConfirmBtnClick);
+
 //use cookies to get player name
 let cookieArray = document.cookie.split("=");
 let currentPlayer = cookieArray[1];
@@ -216,3 +224,41 @@ function handleBuyAmountDrag(evt) {
   }
   */
 }
+
+async function handleSellConfirmBtnClick() {
+  const fruit = document.getElementById("fruitSelector").value;
+  if (fruit !== "none") {
+    let cookieArray = document.cookie.split("=");
+    const user = cookieArray[1];
+    const payload = { userName: user };
+    const userData = await fetch(backend + "getPlayer", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        return data;
+      });
+
+    const userFruitCount = userData.inventory[fruit];
+    const sellAmount = document.getElementById("sellAmount").value;
+    if (sellAmount <= userFruitCount) {
+      const fruitCost = userData.location.prices[fruit];
+      moneyEarned = sellAmount * fruitCost;
+      userData.money += moneyEarned;
+      userData.inventory[fruit] -= sellAmount;
+    }
+    const updatePayload = { playerData: userData };
+    await fetch(backend + "updatePlayer", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updatePayload),
+    });
+  }
+  displayGameInfo();
+}
+
+async function handleBuyConfirmBtnClick() {}
