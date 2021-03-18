@@ -1,9 +1,12 @@
+@import url("https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Permanent+Marker&display=swap");
+
 .main {
   padding: 1rem;
   font-family: "Work Sans", sans-serif;
 }
 
 h1 {
+  font-family: "Permanent Marker", cursive;
   text-align: center;
 }
 
@@ -31,4 +34,16 @@ h1 {
   width: 50px;
   height: auto;
   display: inline-block;
+}
+
+.image {
+  position: relative;
+  /* bottom: 0; */
+  /* top: 500px; */
+}
+
+#image1 {
+  position: absolute;
+  width: 700px;
+  height: 400px;
 }
